@@ -1,7 +1,7 @@
+import math
+
 def run():
-    numberDictionary = {}
-    for i in range(1,101):
-        numberDictionary[i] = i**3 
+    numberDictionary = {i: round(i**0.5, 2) for i in range(1,1001) if i % 3 != 0}
 
     print(numberDictionary)
 
