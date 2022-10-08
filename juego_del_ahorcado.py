@@ -42,7 +42,7 @@ def game(chosen_word, letters, hidden_word, size_of_letters, correct_letters):
         return True
     for y in range(size_of_letters):
         for y in range(size_of_letters):
-            if guessed_letter == letters[y]:
+            if guessed_letter.lower == letters[y]:
                 where_it_is = letters.index(guessed_letter)
                 correct_letters.pop(where_it_is)
                 correct_letters.insert(where_it_is, guessed_letter)
