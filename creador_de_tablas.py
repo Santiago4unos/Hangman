@@ -2,21 +2,13 @@ from functools import reduce
 import os
 from statistics import mean, median, mode
 
-def relative_frequency_calculator(absolute_frequencies_men, absolute_frequencies_women, summation_men, summation_women, which):
+def relative_frequency_calculator(absolute_frequencies, summation_total):
     relative_frequencies = []
-    if which == 1:
-        for i in range(len(absolute_frequencies_men)):
-            relative_frequency = absolute_frequencies_men[i] / summation_men
-            relative_frequency = round(relative_frequency, 2)
-            relative_frequencies.append(relative_frequency)
-        return relative_frequencies
-    if which == 2:
-        for i in range(len(absolute_frequencies_women)):
-            relative_frequency = absolute_frequencies_women[i] / summation_women
-            relative_frequency = round(relative_frequency, 2)
-            relative_frequencies.append(relative_frequency)
-        return relative_frequencies
-
+    for i in range(len(absolute_frequencies)):
+        relative_frequency = absolute_frequencies[i] / summation_total
+        relative_frequency = round(relative_frequency, 2)
+        relative_frequencies.append(relative_frequency)
+    return relative_frequencies
 
 def percentage_and_degrees_calculator(relative_frequencies, which):
     if which == 1:
@@ -27,7 +19,7 @@ def percentage_and_degrees_calculator(relative_frequencies, which):
     if which == 2:
         degrees = []
         for i in range(len(relative_frequencies)):
-            degrees.append(360 * relative_frequencies[i])
+            degrees.append(round(360 * relative_frequencies[i], 2))
         return degrees
 
     
@@ -114,8 +106,8 @@ def run():
         for y in range(absolute_frequencies_total[i]):
             data.append(classes_in_order[i])
     summation_total = summation_women + summation_men
-    relative_frequencies_women = relative_frequency_calculator(absolute_frequencies_men, absolute_frequencies_women, summation_men, summation_women, 2)
-    relative_frequencies_men = relative_frequency_calculator(absolute_frequencies_men, absolute_frequencies_women, summation_men, summation_women, 1)
+    relative_frequencies_women = relative_frequency_calculator(absolute_frequencies_women, summation_total)
+    relative_frequencies_men = relative_frequency_calculator(absolute_frequencies_men, summation_total)
     for i in range(len(relative_frequencies_men)):
         relative_frequencies.append(relative_frequencies_women[i] + relative_frequencies_men[i])
     percentages_women = percentage_and_degrees_calculator(relative_frequencies_women, 1)
@@ -131,19 +123,25 @@ def run():
     Variance = range_variance_calculator(classes_in_order, mode, absolute_frequencies_total, summation_total, 2)
     sd = Variance ** 0.5
     sd = round(sd, 2)
+    os.system("cls")
     for i in range(len(classes_in_order)):
+        print("")
         print("Clase " + str(classes_in_order[i]) + ":")
         print("Frecuencia absoluta total: " + str(absolute_frequencies_total[i]))
         print("Frecuencia absoluta de mujeres: " + str(absolute_frequencies_women[i]))
         print("Frecuencia absoluta de hombres: " + str(absolute_frequencies_men[i]))
+        print("")
         print("Frecuencia relativa: " + str(relative_frequencies[i]))
         print("Frecuencia acumulada: " + str(acumulative_frequencies[i]))
+        print("")
         print("Porcentajes totales: " + str(percentages_total[i]))
         print("Porcentajes de mujeres: " + str(percentages_women[i]))
         print("Porcentajes de hombres: " + str(percentages_men[i]))
+        print("")
         print("Grados: " + str(degrees_total[i]))
         print("Grados en mujeres: " + str(degrees_women[i]))
         print("Grados en hombres: " + str(degrees_men[i]))
+        print("")
     print("Media: " + str(mean))
     print("Mediana: " + str(median))
     print("Moda: " + str(mode))
