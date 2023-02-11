@@ -9,7 +9,7 @@ def normalize(chosen_word: str):
         chosen_word = chosen_word.replace(vocals_with_accent_marks[y], vocals[y])
     return chosen_word
 
-def game(incorrect_letters_list: list, incorrect_letters_str: str, win: list, chosen_word: str, hidden_word: str, correct_letters: list) -> list:
+def game(HANGMANPICS: tuple, incorrect_letters_list: list, incorrect_letters_str: str, win: list, chosen_word: str, hidden_word: str, correct_letters: list) -> list:
     chosen_word = chosen_word.lower()
     guessed_correctly = True
     where_it_is = -1
@@ -29,6 +29,18 @@ def game(incorrect_letters_list: list, incorrect_letters_str: str, win: list, ch
         print("Adivina la palabra")
         print("¿Podrás hacerlo?")
         print(hidden_word)
+        if win[0] == 6:
+            print(HANGMANPICS[0])
+        elif win[0] == 5:
+            print(HANGMANPICS[1])
+        elif win[0] == 4:
+            print(HANGMANPICS[2])
+        elif win[0] == 3:
+            print(HANGMANPICS[3])
+        elif win[0] == 2:
+            print(HANGMANPICS[4])
+        elif win[0] == 1:
+            print(HANGMANPICS[5])
         print(f"Vidas restantes: {win[0]}")
         print(f"Letras incorrectas: {incorrect_letters_str}")
         guessed_letter: str = input("Escribe una letra: ")
@@ -67,8 +79,58 @@ def read():
 def run():
     chosen_word = read()
     incorrect_letters = []
+    HANGMANPICS = ('''
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ /    |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ / \  |
+      |
+=========''')
     incorrect_letters_str = ""
-    win = [10, False]
+    win = [6, False]
     print("Bienvenido al juego")
     print("""
  __ __   ____  ____    ____  ___ ___   ____  ____  
@@ -90,12 +152,13 @@ def run():
     while win[1] is False and win[0] != 0:
         if incorrect_letters != []:
             incorrect_letters_str = ", ".join(incorrect_letters)
-        win = game(incorrect_letters, incorrect_letters_str, win, normalized_chosen_word, hidden_word, correct_letters)
+        win = game(HANGMANPICS, incorrect_letters, incorrect_letters_str, win, normalized_chosen_word, hidden_word, correct_letters)
         if win[3] is False:
             win[0] -= 1
     if win[0] == 0:
         os.system("cls")
         print("Game over")
+        print(HANGMANPICS[6])
     else:
         print(f"¡Felicidades, has ganado!, la palabra era: {chosen_word}")
 
